@@ -10,6 +10,10 @@ client = slack_sdk.WebClient(token=slack_token)
 
 def send_image_to_slack(file_path, message=""):
     try:
+        # check file_path exist
+        if not os.path.exists(file_path):
+            print(f"File {file_path} không tồn tại.")
+            return
         # Gửi tệp ảnh lên Slack
         response = client.files_upload_v2(
             channel=channel_id,

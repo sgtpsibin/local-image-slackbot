@@ -18,10 +18,7 @@ class ImageHandler(FileSystemEventHandler):
         if not event.is_directory:
             file_path = event.src_path
             _, file_extension = os.path.splitext(file_path)
-            # check is temp file name
-            if os.path.basename(file_path).startswith('.'):
-                print(f"Bỏ qua tệp ẩn hoặc tệp tạm thời: {file_path}")
-                return
+        
             if file_extension.lower() in IMAGE_EXTENSIONS:
                 print(f"Phát hiện ảnh mới: {file_path}")
                 self.callback(file_path)
@@ -45,7 +42,7 @@ def start_watching(folder_path, callback):
 
     try:
         while observer.is_alive():
-            time.sleep(1)
+            time.sleep(0.1)
     except KeyboardInterrupt:
         observer.stop()
     observer.join()
